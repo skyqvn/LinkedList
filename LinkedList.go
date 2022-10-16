@@ -1,13 +1,13 @@
 package LinkedList
 
-// Value LinkedList's value struct.
+// Value is LinkedList's value struct.
 type Value[T interface{}] struct {
 	next *Value[T]
 	last *Value[T]
 	v    T
 }
 
-// LinkedList LinkedList struct.
+// LinkedList struct.
 type LinkedList[T interface{}] struct {
 	start  *Value[T]
 	end    *Value[T]
@@ -16,22 +16,22 @@ type LinkedList[T interface{}] struct {
 	index  int
 }
 
-// Start Get the value of the first element.
+// Start gets the value of the first element.
 func (ll *LinkedList[T]) Start() T {
 	return ll.start.v
 }
 
-// End Get the value of the last element.
+// End gets the value of the last element.
 func (ll *LinkedList[T]) End() T {
 	return ll.end.v
 }
 
-// Get Get the value of the current element.
+// Get the value of the current element.
 func (ll *LinkedList[T]) Get() T {
 	return ll.now.v
 }
 
-// Set Set the value of the current element.
+// Set the value of the current element.
 func (ll *LinkedList[T]) Set(v T) {
 	if ll.now == nil || ll.length == 0 {
 		panic("the LinkedList's length is 0")
@@ -39,7 +39,7 @@ func (ll *LinkedList[T]) Set(v T) {
 	ll.now.v = v
 }
 
-// IsStart Check if it is the first element.
+// IsStart checks if it is the first element.
 func (ll *LinkedList[T]) IsStart() bool {
 	if ll.index == 0 {
 		return true
@@ -48,7 +48,7 @@ func (ll *LinkedList[T]) IsStart() bool {
 	}
 }
 
-// IsEnd Check if it is the last element.
+// IsEnd checks if it is the last element.
 func (ll *LinkedList[T]) IsEnd() bool {
 	if ll.index == ll.length-1 {
 		return true
@@ -57,7 +57,7 @@ func (ll *LinkedList[T]) IsEnd() bool {
 	}
 }
 
-// Forward Forward to the next element.
+// Forward to the next element.
 func (ll *LinkedList[T]) Forward() {
 	ll.now = ll.now.next
 	if ll.index == ll.length-1 {
@@ -67,7 +67,7 @@ func (ll *LinkedList[T]) Forward() {
 	}
 }
 
-// Back Back to the last element.
+// Back to the last element.
 func (ll *LinkedList[T]) Back() {
 	ll.now = ll.now.last
 	if ll.index == 0 {
@@ -77,17 +77,17 @@ func (ll *LinkedList[T]) Back() {
 	}
 }
 
-// Length Get the LinkedList's length.
+// Length get the LinkedList's length.
 func (ll *LinkedList[T]) Length() int {
 	return ll.length
 }
 
-// Index Get the current index.
+// Index get the current index.
 func (ll *LinkedList[T]) Index() int {
 	return ll.index
 }
 
-// Insert Insert a value before this element
+// Insert a value before this element
 func (ll *LinkedList[T]) Insert(v T) {
 	appe := &Value[T]{
 		next: ll.now,
@@ -112,7 +112,7 @@ func (ll *LinkedList[T]) Insert(v T) {
 	ll.length += 1
 }
 
-// Append Append a value to the end of the LinkedList.
+// Append a value to the end of the LinkedList.
 func (ll *LinkedList[T]) Append(v T) {
 	appe := &Value[T]{
 		last: ll.end,
@@ -134,7 +134,7 @@ func (ll *LinkedList[T]) Append(v T) {
 	ll.length += 1
 }
 
-// Delete Delete the current value and back to the last value.
+// Delete the current value and back to the last value.
 func (ll *LinkedList[T]) Delete() {
 	now := ll.now
 	las := now.last
@@ -154,17 +154,17 @@ func (ll *LinkedList[T]) Delete() {
 
 // Positions:Some positions.
 const (
-	// START Represents the first value of the LinkedList.
+	// START represents the first value of the LinkedList.
 	START = iota
-	// END Represents the last value's pointer of the LinkedList.
+	// END represents the last value's pointer of the LinkedList.
 	END
-	// BEFORE Represents the value before 'now'.
+	// BEFORE represents the value before 'now'.
 	BEFORE
-	// AFTER Represents the value after 'now'.
+	// AFTER represents the value after 'now'.
 	AFTER
 )
 
-// InsertTo Add the value to the item corresponding to position.
+// Add the value to the item corresponding to position.
 func (ll *LinkedList[T]) InsertTo(idx int, v T) {
 	if idx == START {
 		appe := &Value[T]{
@@ -215,7 +215,7 @@ func (ll *LinkedList[T]) InsertTo(idx int, v T) {
 	}
 }
 
-// Goto Jump to the item corresponding to the position(in var 'START','END','BEFORE' and 'AFTER').
+// Goto the item corresponding to the position(in var 'START','END','BEFORE' and 'AFTER').
 func (ll *LinkedList[T]) Goto(idx int) {
 	if idx == START {
 		ll.now = ll.start
@@ -232,7 +232,7 @@ func (ll *LinkedList[T]) Goto(idx int) {
 	}
 }
 
-// GetByPosition Get the value of the item by selecting an position(in var 'START','END','BEFORE' and 'AFTER').
+// Get the value of the item by selecting an position(in var 'START','END','BEFORE' and 'AFTER').
 func (ll *LinkedList[T]) GetByPosition(idx int) T {
 	if idx == START {
 		return ll.start.v
