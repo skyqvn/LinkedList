@@ -7,7 +7,7 @@ type Value[T interface{}] struct {
 	v    T
 }
 
-// LinkedList struct.
+// LinkedList is a thread unsafe two-way loop linked list.
 type LinkedList[T interface{}] struct {
 	start  *Value[T]
 	end    *Value[T]
@@ -165,8 +165,8 @@ const (
 )
 
 // Add the value to the item corresponding to position.
-func (ll *LinkedList[T]) InsertTo(idx int, v T) {
-	if idx == START {
+func (ll *LinkedList[T]) InsertTo(pos int, v T) {
+	if pos == START {
 		appe := &Value[T]{
 			last: ll.end,
 			next: ll.start,
@@ -177,7 +177,7 @@ func (ll *LinkedList[T]) InsertTo(idx int, v T) {
 		ll.start = appe
 		ll.length += 1
 		ll.index += 1
-	} else if idx == END {
+	} else if pos == END {
 		appe := &Value[T]{
 			last: ll.end,
 			next: ll.start,
@@ -187,7 +187,7 @@ func (ll *LinkedList[T]) InsertTo(idx int, v T) {
 		ll.start.last = appe
 		ll.end = appe
 		ll.length += 1
-	} else if idx == BEFORE {
+	} else if pos == BEFORE {
 		appe := &Value[T]{
 			last: ll.now.last,
 			next: ll.now,
@@ -200,7 +200,7 @@ func (ll *LinkedList[T]) InsertTo(idx int, v T) {
 		}
 		ll.length += 1
 		ll.index += 1
-	} else if idx == AFTER {
+	} else if pos == AFTER {
 		appe := &Value[T]{
 			last: ll.now,
 			next: ll.now.next,
@@ -216,31 +216,31 @@ func (ll *LinkedList[T]) InsertTo(idx int, v T) {
 }
 
 // Goto the item corresponding to the position(in var 'START','END','BEFORE' and 'AFTER').
-func (ll *LinkedList[T]) Goto(idx int) {
-	if idx == START {
+func (ll *LinkedList[T]) Goto(pos int) {
+	if pos == START {
 		ll.now = ll.start
 		ll.index = 0
-	} else if idx == END {
+	} else if pos == END {
 		ll.now = ll.end
 		ll.index = ll.length - 1
-	} else if idx == BEFORE {
+	} else if pos == BEFORE {
 		ll.now = ll.now.last
 		ll.index -= 1
-	} else if idx == AFTER {
+	} else if pos == AFTER {
 		ll.now = ll.now.next
 		ll.index += 1
 	}
 }
 
 // Get the value of the item by selecting an position(in var 'START','END','BEFORE' and 'AFTER').
-func (ll *LinkedList[T]) GetByPosition(idx int) T {
-	if idx == START {
+func (ll *LinkedList[T]) GetByPosition(pos int) T {
+	if pos == START {
 		return ll.start.v
-	} else if idx == END {
+	} else if pos == END {
 		return ll.end.v
-	} else if idx == BEFORE {
+	} else if pos == BEFORE {
 		return ll.now.last.v
-	} else if idx == AFTER {
+	} else if pos == AFTER {
 		return ll.now.next.v
 	} else {
 		panic("could not find this position, please select one in 'START','END','BEFORE' and 'AFTER'")
